@@ -22,6 +22,8 @@ case $OS in
         ;;
 esac
 
+echo $ARCH
+
 if [ "$OS" = "Linux" ]; then
     sudo apt-get install clang curl autoconf automake libtool pkg-config
 elif [ "$OS" = "Darwin" ]; then
