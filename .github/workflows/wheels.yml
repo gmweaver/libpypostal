@@ -23,9 +23,21 @@ jobs:
         run: python -m cibuildwheel --output-dir dist
         env:
           CIBW_SKIP: cp36-* cp37-* *musllinux*
-          CIBW_BEFORE_ALL_LINUX: yum install -y autoconf automake curl libtool pkgconfig sudo
-          CIBW_BEFORE_ALL_MACOS: brew install autoconf automake curl libtool pkg-config
-          CIBW_BEFORE_ALL: >
+          CIBW_BEFORE_ALL_LINUX: >
+            yum install -y autoconf automake curl libtool pkgconfig sudo
+            git clone https://github.com/openvenues/libpostal &&
+            cd libpostal &&
+            git checkout tags/v1.1 &&
+            ./bootstrap.sh && 
+            ./configure --disable-data-download --disable-sse2 && 
+            make -j4 && 
+            sudo make install &&
+            sudo ldconfig &&
+            pkg-config --cflags libpostal && 
+            pkg-config --libs libpostal && 
+            pkg-config --cflags --libs libpostal
+          CIBW_BEFORE_ALL_MACOS: >
+            brew install autoconf automake curl libtool pkg-config
             git clone https://github.com/openvenues/libpostal &&
             cd libpostal &&
             git checkout tags/v1.1 &&
@@ -36,7 +48,6 @@ jobs:
             pkg-config --cflags libpostal && 
             pkg-config --libs libpostal && 
             pkg-config --cflags --libs libpostal
-          CIBW_AFTER_ALL_LINUX: sudo ldconfig 
 
       - uses: actions/upload-artifact@v4
         with:
