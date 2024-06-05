@@ -30,7 +30,7 @@ jobs:
             cd libpostal &&
             git checkout tags/v1.1 &&
             ./bootstrap.sh && 
-            ./configure && 
+            ./configure --disable-data-download --disable-sse2 && 
             make -j4 && 
             sudo make install && 
             pkg-config --cflags libpostal && 
