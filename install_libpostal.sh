@@ -26,7 +26,6 @@ if [ "$OS" = "Linux" ]; then
     sudo apt-get install clang curl autoconf automake libtool pkg-config
 elif [ "$OS" = "Darwin" ]; then
     if [ "$ARCH" == "arm64" ]; then
-        echo "I AM HERE"
         arch -arm64 brew install curl autoconf automake libtool pkg-config
     else
         brew install curl autoconf automake libtool pkg-config
