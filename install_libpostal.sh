@@ -1,6 +1,7 @@
 #!/bin/bash
 
 OS=$(uname -s)
+ARCH=$(uname -m)
 
 case $OS in
     Linux)
@@ -24,7 +25,11 @@ esac
 if [ "$OS" = "Linux" ]; then
     sudo apt-get install clang curl autoconf automake libtool pkg-config
 elif [ "$OS" = "Darwin" ]; then
-    brew install automake curl autoconf automake libtool pkg-config
+    if [ "$ARCH" == *"x86"* ]; then
+        brew install automake curl autoconf automake libtool pkg-config
+    elif [ "$ARCH" == *"arm"* ]; then
+        arch -arm64 brew install automake curl autoconf automake libtool pkg-config
+    fi
 fi
 
 cd $1
