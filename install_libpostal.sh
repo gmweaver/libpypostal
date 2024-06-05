@@ -27,12 +27,14 @@ elif [ "$OS" = "Darwin" ]; then
     brew install curl autoconf automake libtool pkg-config
 fi
 
+cd $1
+git clone https://github.com/openvenues/libpostal
 cd libpostal
 git checkout tags/v1.1
 ./bootstrap.sh
 ./configure --datadir=/tmp/libpostal_data_files --disable-data-download --disable-sse2
 make -j4
-sudo make install
+make install
 
 if [ "$OS" = "Linux" ]; then
     sudo ldconfig
