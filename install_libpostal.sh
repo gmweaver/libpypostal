@@ -1,7 +1,6 @@
 #!/bin/bash
 
 OS=$(uname -s)
-ARCH=$(uname -m)
 
 case $OS in
     Linux)
@@ -21,16 +20,6 @@ case $OS in
         # Handle unsupported OS here
         ;;
 esac
-
-if [ "$OS" = "Linux" ]; then
-    sudo apt-get install clang curl autoconf automake libtool pkg-config
-elif [ "$OS" = "Darwin" ]; then
-    if [ "$ARCH" == "arm64" ]; then
-        arch -arm64 brew install curl autoconf automake libtool pkg-config
-    else
-        brew install curl autoconf automake libtool pkg-config
-    fi
-fi
 
 cd $1
 git clone https://github.com/openvenues/libpostal
