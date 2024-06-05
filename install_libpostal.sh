@@ -25,10 +25,10 @@ esac
 if [ "$OS" = "Linux" ]; then
     sudo apt-get install clang curl autoconf automake libtool pkg-config
 elif [ "$OS" = "Darwin" ]; then
-    if [ "$ARCH" == *"x86"* ]; then
-        brew install curl autoconf automake libtool pkg-config
-    elif [ "$ARCH" == *"arm"* ]; then
+    if [ "$ARCH" == "arm64" ]; then
         arch -arm64 brew install curl autoconf automake libtool pkg-config
+    else
+        brew install curl autoconf automake libtool pkg-config
     fi
 fi
 
