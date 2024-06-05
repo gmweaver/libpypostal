@@ -26,9 +26,9 @@ if [ "$OS" = "Linux" ]; then
     sudo apt-get install clang curl autoconf automake libtool pkg-config
 elif [ "$OS" = "Darwin" ]; then
     if [ "$ARCH" == *"x86"* ]; then
-        brew install automake curl autoconf automake libtool pkg-config
+        brew install curl autoconf automake libtool pkg-config
     elif [ "$ARCH" == *"arm"* ]; then
-        arch -arm64 brew install automake curl autoconf automake libtool pkg-config
+        arch -arm64 brew install curl autoconf automake libtool pkg-config
     fi
 fi
 
