@@ -16,8 +16,8 @@ def _install_libpostal() -> None:
         subprocess.run(["./install_libpostal.sh", tempdir], check=True)
 
 
-if not _libpostal_installed():
-    _install_libpostal()
+# if not _libpostal_installed():
+#     _install_libpostal()
 
 ext_modules = [
     Extension(
