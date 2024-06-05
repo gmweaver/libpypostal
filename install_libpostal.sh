@@ -24,7 +24,7 @@ esac
 if [ "$OS" = "Linux" ]; then
     sudo apt-get install clang curl autoconf automake libtool pkg-config
 elif [ "$OS" = "Darwin" ]; then
-    brew install curl autoconf automake libtool pkg-config
+    brew install automake curl autoconf automake libtool pkg-config
 fi
 
 cd $1
