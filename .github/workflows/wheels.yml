@@ -24,7 +24,7 @@ jobs:
       - name: Build wheels
         run: python -m cibuildwheel --output-dir wheelhouse
         env:
-          CIBW_BEFORE_ALL_LINUX: yum install -y autoconf automake curl libtool sudo
+          CIBW_BEFORE_ALL_LINUX: apt install -y autoconf automake curl libtool sudo
           CIBW_BEFORE_ALL_MACOS: brew install autoconf automake curl libtool pkg-config
 
       - uses: actions/upload-artifact@v4
