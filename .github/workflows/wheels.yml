@@ -4,12 +4,11 @@ on: [push, pull_request]
 
 jobs:
   build_wheels:
-    name: Build wheels on ${{ matrix.os }} ${{ matrix.cibw_arch }}
+    name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        cibw_arch: ["native"]
         cibw_build: ["cp39-* cp310-* cp311-*"]
 
     steps:
@@ -22,12 +21,11 @@ jobs:
         run: python -m pip install cibuildwheel==2.18.1
 
       - name: Build wheels
-        run: python -m cibuildwheel --output-dir wheelhouse
+        run: python -m cibuildwheel --output-dir dist
         env:
           CIBW_SKIP: cp36-* cp37-* *musllinux*
           CIBW_BEFORE_ALL_LINUX: yum install -y autoconf automake curl libtool sudo
           CIBW_BEFORE_ALL_MACOS: brew install autoconf automake curl libtool pkg-config
-          CIBW_ENVIRONMENT: 'LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH'
 
       - uses: actions/upload-artifact@v4
         with:
