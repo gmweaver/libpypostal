@@ -39,7 +39,7 @@ git checkout tags/v1.1
 ./bootstrap.sh
 ./configure --datadir=/tmp/libpostal_data_files --disable-data-download --disable-sse2
 make -j4
-make install
+sudo make install
 
 if [ "$OS" = "Linux" ]; then
     sudo ldconfig
