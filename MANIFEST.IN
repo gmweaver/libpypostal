@@ -1,2 +1,1 @@
 include src/pyutils.h
-include install_libpostal.sh

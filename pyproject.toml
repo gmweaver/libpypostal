@@ -1,8 +1,22 @@
 [project]
 name = "libpypostal"
+description = "Python bindings for libpostal C library."
 version = "0.0.1"
-readme = "README.md"
 requires-python = ">=3.8"
+readme = "README.md"
+license = {text = "MIT License"}
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Repository = "https://github.com/gmweaver/libpypostal"
 
 [build-system]
 requires = ["setuptools"]
@@ -10,3 +24,6 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 include = ["libpypostal*"]
+
+[tool.setuptools.package-data]
+libpypostal= ["libpostal_download_data"]

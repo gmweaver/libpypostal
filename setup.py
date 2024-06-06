@@ -1,5 +1,6 @@
 from setuptools import setup, Extension
 
+
 ext_modules = [
     Extension(
         "libpypostal._parser",
