@@ -1,23 +1,4 @@
-import ctypes.util
-import subprocess
-import tempfile
-
 from setuptools import setup, Extension
-
-
-def _libpostal_installed() -> bool:
-    """Checks if libpostal is installed."""
-    return ctypes.util.find_library("postal") is not None
-
-
-def _install_libpostal() -> None:
-    """Installs libpostal."""
-    with tempfile.TemporaryDirectory() as tempdir:
-        subprocess.run(["./install_libpostal.sh", tempdir], check=True)
-
-
-# if not _libpostal_installed():
-#     _install_libpostal()
 
 ext_modules = [
     Extension(

@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 from libpypostal import parser
 
 
-@patch("libpypostal._parse_address")
+@patch("libpypostal.parser._parse_address")
 def test_parse_address_single_match_each_component(
     mock__parser_parse_address: MagicMock,
 ) -> None:
@@ -44,11 +44,11 @@ def test_parse_address_single_match_each_component(
 
     assert actual == expected
     mock__parser_parse_address.assert_called_once_with(
-        test_address, language=None, country=None
+        test_address, language=None, country_code=None
     )
 
 
-@patch("libpypostal._parse_address")
+@patch("libpypostal.parser._parse_address")
 def test_parse_address_multiple_matches_for_component(
     mock__parser_parse_address: MagicMock,
 ) -> None:
@@ -89,5 +89,5 @@ def test_parse_address_multiple_matches_for_component(
 
     assert actual == expected
     mock__parser_parse_address.assert_called_once_with(
-        test_address, language=None, country=None
+        test_address, language=None, country_code=None
     )
