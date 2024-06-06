@@ -1,7 +1,7 @@
 [project]
 name = "libpypostal"
 description = "Python bindings for libpostal C library."
-version = "0.0.4"
+version = "0.0.5"
 requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT License"}
