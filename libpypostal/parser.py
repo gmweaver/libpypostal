@@ -29,7 +29,7 @@ class LibpostalAddressComponent(str, Enum):
 
 
 def _parse_address(
-    address: str, language: str, country_code: str
+    address: str, language: Optional[str] = None, country_code: Optional[str] = None
 ) -> List[Tuple[str, str]]:
     from libpypostal import _parser  # type: ignore # pylint: disable=no-name-in-module,import-outside-toplevel
 

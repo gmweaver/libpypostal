@@ -3,55 +3,55 @@
 
 #include "pyutils.h"
 
-struct module_state {
+struct module_state
+{
     PyObject *error;
 };
 
 #define GETSTATE(m) ((struct module_state *)PyModule_GetState(m))
 
 static PyObject *py_parse_address(PyObject *self, PyObject *args,
-                                  PyObject *keywords) {
+                                  PyObject *keywords)
+{
     PyObject *arg_input;
     PyObject *arg_language = Py_None;
     PyObject *arg_country = Py_None;
 
     PyObject *result = NULL;
 
-    char *datadir = getenv("LIBPOSTAL_DATA_DIR");
-
-    if ((datadir != NULL) && (!libpostal_setup_datadir(datadir) ||
-                              !libpostal_setup_parser_datadir(datadir)) ||
-        (!libpostal_setup() || !libpostal_setup_parser())) {
-        PyErr_SetString(PyExc_TypeError, "Error loading libpostal data");
-    }
-
     static char *kwlist[] = {"address", "language", "country", NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, keywords, "O|OO:pyparser", kwlist,
-                                     &arg_input, &arg_language, &arg_country)) {
+                                     &arg_input, &arg_language, &arg_country))
+    {
         return 0;
     }
 
     char *input = PyObject_to_string(arg_input);
 
-    if (input == NULL) {
+    if (input == NULL)
+    {
         return NULL;
     }
 
     char *language = NULL;
 
-    if (arg_language != Py_None) {
+    if (arg_language != Py_None)
+    {
         language = PyObject_to_string(arg_language);
-        if (language == NULL) {
+        if (language == NULL)
+        {
             goto exit_free_input;
         }
     }
 
     char *country = NULL;
 
-    if (arg_country != Py_None) {
+    if (arg_country != Py_None)
+    {
         country = PyObject_to_string(arg_language);
-        if (country == NULL) {
+        if (country == NULL)
+        {
             goto exit_free_language;
         }
     }
@@ -63,35 +63,41 @@ static PyObject *py_parse_address(PyObject *self, PyObject *args,
 
     libpostal_address_parser_response_t *parsed =
         libpostal_parse_address(input, options);
-    if (parsed == NULL) {
+    if (parsed == NULL)
+    {
         goto exit_free_country;
     }
 
     result = PyList_New((Py_ssize_t)parsed->num_components);
-    if (!result) {
+    if (!result)
+    {
         goto exit_destroy_response;
     }
 
-    for (int i = 0; i < parsed->num_components; i++) {
+    for (int i = 0; i < parsed->num_components; i++)
+    {
         char *component = parsed->components[i];
         char *label = parsed->labels[i];
         PyObject *component_unicode = PyUnicode_DecodeUTF8(
             (const char *)component, strlen(component), "strict");
-        if (component_unicode == NULL) {
+        if (component_unicode == NULL)
+        {
             Py_DECREF(result);
             goto exit_destroy_response;
         }
 
         PyObject *label_unicode =
             PyUnicode_DecodeUTF8((const char *)label, strlen(label), "strict");
-        if (label_unicode == NULL) {
+        if (label_unicode == NULL)
+        {
             Py_DECREF(component_unicode);
             Py_DECREF(result);
             goto exit_destroy_response;
         }
         PyObject *tuple =
             Py_BuildValue("(OO)", component_unicode, label_unicode);
-        if (tuple == NULL) {
+        if (tuple == NULL)
+        {
             Py_DECREF(component_unicode);
             Py_DECREF(label_unicode);
             goto exit_destroy_response;
@@ -107,15 +113,18 @@ static PyObject *py_parse_address(PyObject *self, PyObject *args,
 exit_destroy_response:
     libpostal_address_parser_response_destroy(parsed);
 exit_free_country:
-    if (country != NULL) {
+    if (country != NULL)
+    {
         free(country);
     }
 exit_free_language:
-    if (language != NULL) {
+    if (language != NULL)
+    {
         free(language);
     }
 exit_free_input:
-    if (input != NULL) {
+    if (input != NULL)
+    {
         free(input);
     }
     return result;
@@ -127,12 +136,14 @@ static PyMethodDef parser_methods[] = {
     {NULL, NULL},
 };
 
-static int parser_traverse(PyObject *m, visitproc visit, void *arg) {
+static int parser_traverse(PyObject *m, visitproc visit, void *arg)
+{
     Py_VISIT(GETSTATE(m)->error);
     return 0;
 }
 
-static int parser_clear(PyObject *m) {
+static int parser_clear(PyObject *m)
+{
     Py_CLEAR(GETSTATE(m)->error);
     libpostal_teardown();
     libpostal_teardown_parser();
@@ -151,18 +162,30 @@ static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
 
 #define INITERROR return NULL
 
-PyObject *PyInit__parser(void) {
+PyObject *PyInit__parser(void)
+{
     PyObject *module = PyModule_Create(&module_def);
 
-    if (module == NULL) {
+    if (module == NULL)
+    {
         INITERROR;
     }
     struct module_state *st = GETSTATE(module);
 
     st->error = PyErr_NewException("_parser.Error", NULL, NULL);
-    if (st->error == NULL) {
+    if (st->error == NULL)
+    {
         Py_DECREF(module);
         INITERROR;
+    }
+
+    char *datadir = getenv("LIBPOSTAL_DATA_DIR");
+
+    if ((datadir != NULL) && (!libpostal_setup_datadir(datadir) ||
+                              !libpostal_setup_parser_datadir(datadir)) ||
+        (!libpostal_setup() || !libpostal_setup_parser()))
+    {
+        PyErr_SetString(PyExc_TypeError, "Error loading libpostal data");
     }
 
     return module;
