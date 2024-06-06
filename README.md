@@ -1,11 +1,5 @@
 # libpypostal
 
-Python wrapper for open-source libpostal project. Custom libary built internally due to lack of continued support for current Python wrapper libraries.
+Python wrapper for open-source libpostal project.
 
-## Usage
-
-### Downloading libpostal data
-
-```
-libpostal_data download all <data-dir>
-```
+Expands work of [pylibpostal](https://github.com/snapADDY/pylibpostal/tree/master) that aimed to simplify install of [pypostal](https://github.com/openvenues/pypostal) by adding distribution of wheels for linux and macos platforms.
