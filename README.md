@@ -17,7 +17,7 @@ Note that this package reuses the C extension code to avoid reinventing the whee
 
 If a wheel is not available for your architecture and/or Python version, you need to first [install libpostal](https://github.com/openvenues/libpostal?tab=readme-ov-file#installation-maclinux).
 
-```
+```console
 pip install libpypostal
 ```
 
@@ -29,7 +29,7 @@ Required to use the library. Use the following utility to download the data.
 
 NOTE: This function will also automatically set the LIBPOSTAL_DATA_DIR to the output directory specified.
 
-```
+```python
 from libpypostal import data_utils
 
 output_dir = "/tmp/libpostal_data_dir"
@@ -38,7 +38,7 @@ data_utils.download_libpostal_data(output_dir)
 
 Alternatively, if you have already downloaded the data, you only need to run:
 
-```
+```python
 from libpypostal import data_utils
 
 output_dir = "/tmp/libpostal_data_dir"
@@ -47,10 +47,21 @@ data_utils.set_data_dir_env_var(output_dir)
 
 ### Address parser
 
-```
+```python
 from libpypostal import parser
 
 parser.parse_address("123 Main St, Somewhere, DC 00000")
 ```
 
+## Versioning
+
+Each release of `libpypostal` depends on a specific version of `libpostal` when building wheels to release.
+
+The version used to build the Python wheels for a given release can be found as follows:
+
+```python
+from libpypostal import version
+
+version.LIBPOSTAL_VERSION
+```
 
