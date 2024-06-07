@@ -50,7 +50,7 @@ data_utils.set_data_dir_env_var(output_dir)
 ```python
 from libpypostal import parser
 
-parser.parse_address("123 Main St, Somewhere, DC 00000")
+parser.parse_address("123 Main St, Somewhere, DC 00000", merge_multiple_matches=True)
 ```
 
 ## Versioning
